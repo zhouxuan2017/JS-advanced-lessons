@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var username="zhangsan";
+		function setName(){
+			username="lisi";
+			console.log(username);
+		}
+		setName();//lisi
+
+
+
+
+		var Person=function(name,age){
+			this.name=name;
+			this.age=age;
+		};
+		Person.prototype.showInfo=function(){
+			console.log("i'm",this.name," ",this.age,"years old");
+		};
+		var p1=new Person("Jack",20);
+		p1.showInfo();
+		
+	</script>
+
+</body>
+</html>
