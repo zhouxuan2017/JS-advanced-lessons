@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var obj1={"username":"zhangsan"};
+        var obj2=obj1;
+        obj2.username="lisi";
+        console.log(obj1);
+
+
+
+        var arr1=[1,2,3,4,5];
+        var arr2=arr1;
+        arr2[0]=6;
+        console.log(arr1);
+
+
+
+        var obj3={"username":"zhangsan"};
+        var obj4={};
+        var username=obj3.username;
+        obj4.username=username;
+        console.log(obj4);
+
+
+
+        //判断的是类型还有变量值
+        var num3=10;
+        var num4=10;
+        console.log(num3==num4);
+
+       //如果是引用类型判断指向的内存空间是否相同
+       var obj5={};
+       var obj6={};
+       console.log(obj5==obj6);
+       
+
+
+       
+       var obj7={"username":"zhangsan"};
+       function fn1(x){
+           x.username="lisi";
+       }
+        fn1(obj7);
+       console.log(obj7);
+
+
+
+       var x=parseInt("sdjkncakj")
+       console.log(isNaN(x));
+
+    
+       //slice   截取指定位置字符串   str.slice(截取字符串起始位置，截取字符串的结束位置)；
+       //负数可以从反方向计算索引
+       var str="ab_cd_ef";
+       str.slice(0,-1);
+       //str.split("分隔符")  以特定的分隔符来进行分割字符串，将字符串作为数组的数组元素，生成一个数组
+       str.split("_");
+
+
+
+
+       var str0="abcdef";
+       console.log(str0.length);
+
+
+       var str1="ancdef";
+       var strObject=new String(str0);
+       console.log(strObject.length);
+    </script>
+</body>
+</html>
