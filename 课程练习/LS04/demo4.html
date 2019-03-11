@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //字面量
+        var obj={x:12,y:13};//对象字面量
+        var arr = [1,2,true,'xyz'];//数组字面量
+
+
+        //ES5(ECMAScript 5)是一个语言标准，JAVAScript是
+        //完全基于ECMAScript实现的脚本语言
+        //ES5是ECMAScript 5简写   
+        //当前主流的版本  ES5   ES6
+        
+        //ES5标准下，没有块级作用域
+        // 在块级作用域下，所有的变量都在定义的花括号内，从定义开始到花括号结束这个范围内可以使用，出了这个范围就是无法访问，
+
+        if(true){
+            var username="zhansan"
+        }
+        console.log(username);//zhangsan可以访问到
+
+
+        if(false){
+            var username="zhansan"
+        }
+        console.log(username);//undefined(不能有true  前一个应该被注释)
+
+
+        for(var i=0;i<3;i++){
+
+        }
+        console.log(i);//3
+
+
+
+
+         //严格模式
+        //写入  'use strict'代表全局的对所有页面js代码均应用严格模式
+        //只想对函数内部实现严格模式   function fn1(){
+        //  函数范围内起作用                 'use strict'
+        //                                   }
+
+
+
+        //全局变量是JAVAScript存在的较大的问题
+        //常规模式
+         function fn2(){
+             username="zhangsan";//自动提升为全局变量（没用var关键字声明）
+         }
+         fn2();
+         console.log(username);//zhangsan
+
+         //严格模式
+        //  function sloppyFunc(){
+        //      'use strict'
+        //      sloppyVar=123;
+        //  }
+        //  sloppyFunc();
+        //  console.log(sloppyVar);//报错
+
+
+
+         //非严格函数下函数中的this指向window即全局变量
+         function fn3(){
+             console.log(this);
+         }
+         fn3();//Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
+
+
+
+
+         //严格函数下this为undefined
+         function thisTest(){
+             'use strict'
+             console.log(this);
+         }
+         thisTest();//undefined
+
+
+
+         //可以用this特性判断当前是否为严格模式
+         //use strict
+         function isStrictMode(){
+             var result= (this==undefined?true:false);
+             return result;
+         }
+         if(isStrictMode()){
+             console.log("严格模式");
+         }
+         else{
+             console.log("非严格模式");//输出结果
+         }
+         
+
+        //常规模式下可以改变对象的属性      严格模式下禁止删除不可改变的属性和未定义的变量
+         var str="abcdef";
+         str.length=1;
+         console.log(str.length)//6
+
+
+        // 'use strict'
+        // var str="abcdef";
+        //  str.length=1;
+        //  console.log(str.length)//报错
+
+
+
+        //严格模式下禁止函数参数重名  否则报错
+        // function f(a,a,b){
+        //     'use strict'
+        //     return a+b;
+        // }
+        // f(2,3,4);//报错
+
+        function f(a,a,b){
+          
+            return a+b;
+        }
+        f(2,3,4);//7
+
+
+
+
+
+        //switch详解
+        //switch的值和case的值进行的是全等的比较，值和类型需要均相等
+        var index=1;
+        switch(index){
+            case 1:
+                 console.log("星期一");
+                 break;
+            case 2:
+                 console.log("星期二");
+                 break;
+            default:
+                 console.log("没有该选项");
+                 break;
+        }
+
+
+       //switch case穿透性
+        var index=1;
+        switch(index){
+            case 1://前面这些条件都会执行后面的语句
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                 console.log("工作日");//工作日
+                 break;
+            case 6:
+            case 7:
+                 console.log("休息日");
+                 break;
+        }
+
+
+
+        var obj={"username":"zhangsan","age":20};
+        obj.__proto__.sex="male";
+        //for in 遍历的是对象的所有可枚举属性
+        for(var i in obj){//
+            console.log("键名"+i);
+            //obj[变量]
+            console.log(obj[i]);//username zhangsan age 20
+        }
+
+        //不建议使用  for in 遍历数组
+        var arr1=[1,2,3];
+        console.log(Object(arr1));
+        for(var j in arr1){
+            console.log(j);
+        }
+    </script>
+</body>
+</html>
