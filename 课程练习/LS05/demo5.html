@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+</body>
+<script>
+    var a=45;
+    if(a=54){
+        console.log("判断相等");//判断相等   但实际上这两个不相等
+    }
+
+    // var a=45;
+    // if(54=a){
+    //     console.log("判断相等");//报错     
+    // }
+
+
+    //正确写法   发反写    自变量在前 变量在后
+    var a=45;
+    if(45==a){
+        console.log("判断相等");//判断相等
+    }
+
+
+
+    var x=1;
+    //++x表示先运算在输出
+    // x++表示先输出在运算
+    //++ --自动完成数据类型的隐式转化
+    //转化为数字类型
+    console.log(x++);//1
+    console.log(++x);//3
+    console.log(x);//3
+    //+=不会进行类型的转化
+    console.log(x+=1);//4
+
+    console.log(3==new String(3));//true
+</script>
+</html>
