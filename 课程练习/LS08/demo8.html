@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    typeof new Date();//"object"
+
+    //对象 instanceof 构造函数
+    //1.判断对象是否可以使用构造函数实例化得到
+    //2.instanceof运算符用于测试构造函数的prototype属性是否出现在对象的原型链中的任何位置
+    //3.判断在对象的原型链上能否找到构造函数的prototype属性
+    function Person(username,age){
+        this.username=username;
+        this.age=age;
+    }
+    var person=new Person("zhangsan",20);
+    console.log(person);//Person {username: "zhangsan", age: 20}
+    console.log(person._proto_==Person.prototype);//false
+
+   
+    person instanceof Person;
+
+    
+
+
+    function Car(make, model, year) {
+      this.make = make;
+      this.model = model;
+      this.year = year;
+    }
+    var auto = new Car('Honda', 'Accord', 1998);
+    console.log(auto instanceof Car);
+    // expected output: true
+    console.log(auto instanceof Object);
+    // expected output: true
+
+
+
+    function foo(){}
+    console.log(foo);//function foo(){}
+    console.log(typeof foo);//function
+    console.log(foo instanceof Object);//true
+    console.log(foo instanceof Function);//true
+    console.log(foo==window.foo);//true
+    console.log(Array  instanceof Function);//true
+    console.log(Array instanceof Object);//true
+    console.log(Math instanceof Function);//false
+    console.log(Math instanceof Object);//true
+    console.log(JSON instanceof Function);//false
+    console.log(JSON instanceof Object);//true
+
+    //- length、arguments（隐藏的局部变量）
+    function fn1(){
+        //length表示的是函数的形参个数
+        //arguments是函数调用时，实参类数组集合
+        console.log(fn1.length);//0
+         for(var i=0;i<arguments.length;i++)
+         {
+             console.log(arguments[i]);
+         }
+    }
+    fn1(1,2,3);//1  2   3
+
+    
+    //caller被调函数中输出被哪个函数所调用
+    function fn2(){
+        console.log(fn2.caller);
+    }
+    function fn3(){
+       fn2();
+    }
+    fn3();//fn3(){
+          // fn2();
+          // }
+
+    
+    //callee    匿名函数的递归调用
+    //arguments.callee();
+    var func=function(n)
+    {
+        if(n<=0)
+          return 1;
+        else
+        //return n*func(n-1);  递归函数调用
+        return n*arguments.callee(n-1);
+    };
+    console.log(func(4));//24
+
+
+
+    var objA={"objName":"AAA"};
+    var objB={"objName":"BBB"};
+    objA.foo=function(){
+        console.log(this.objName);
+    }
+    objA.foo();//   AAA
+    //方法.call();
+    objA.foo.call(objB);//BBB
+
+    
+
+
+    function Person(username,age)
+    {
+        this.username=username;
+        this.age=age;
+    }
+    function Student(username,age,sex){
+        Person.call(this,username,age);
+        this.sex=sex;
+    }
+    var student=new Student("zhangsan",20,"male");
+    console.log(student);//tudent {username: "zhangsan", age: 20, sex: "male"}
+
+
+    //swim.call(对象，参数，参数)
+    function swim(m,n){
+        console.log(this.name,m,n);
+    }
+    var bird={
+        name:"polly",
+        fly:function(m,n){
+            console.log(this.name,m,n);
+        }
+    };
+    var me={
+        name:"ABC"
+    }
+    swim.call(me,"hello","world");//ABC hello world
+
+    //如果是apply就写数组
+    swim.apply(bird,["hello","world"])//polly hello world
+
+    //bird切换函数的this指向，但是不会立刻执行而是会生成一个新的函数
+    var swim1=swim.bind(bird,);
+    swim1();//polly undefined undefined
+
+
+
+    var obj={
+        "objName":"obj1",
+        "show":function(){
+            function fn1(){
+                console.log(this.objName);
+            }
+          fn1();
+        }
+    }
+    obj.show();//undefined
+
+
+
+
+    objName="obj2";
+    var obj={
+        "objName":"obj1",
+        "show":function(){
+            function fn1(){
+                console.log(this.objName);
+            }
+          fn1();
+        }
+    }
+    obj.show();//obj2
+
+
+    function fn2(){
+        console.log(this);
+    }
+    fn2();//Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
+
+
+
+    //高阶函数
+    function add(x,y,f){
+        return f(x)+f(y);
+    }
+    add(2,3,function(x){
+        return x+1;
+    });//7
+    add(2,-3,Math.abs);//5
+    add(2,3,Math.sqrt);//3.1462643699419726
+
+    var obj={x:23};
+    var fun1=function(){
+        return function fun2(){
+            return this.x;
+        }
+    };
+    obj.fun3=fun1;
+    obj.fun4=fun1();
+    console.log(obj.fun3());// fun2(){
+           // return this.x;
+        //}
+    console.log(obj.fun3()());//undefined
+    console.log(obj.fun4());//23
+</script>
+</html>
