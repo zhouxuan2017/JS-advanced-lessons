@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    max(2,3)
+    function max(a,b){
+        return a>b?a:b;
+    }
+    console.log(max(2,3));//3
+
+
+   
+    var min=function(x,y){
+        return x>y?y:x;
+    }
+  //不能在min声明前进行调用
+    min(2,3);
+
+
+    //通过构造函数实例化一个函数
+    //Function(arg1,arg2,arg3,....函数体);
+    //执行效率相对较低，但是更加灵活
+    var max=new Function("a","b","return a>b?a:b;");
+    console.log(max(2,3));//3
+
+
+    //非严格模式下this为全局对象
+    function test(){
+        console.log(this);
+    }
+    test();//window
+
+
+    //严格模式下为undefined
+    // function test(){
+    //     'use strict'
+    //     console.log(this);
+    // }
+    // test();//undefined
+
+
+    //对象内部this指向调用该方法的对象
+    var obj={
+        x:0,
+        test:function(){
+            console.log(this.x);
+        }
+    };
+    obj.test();//0
+
+
+
+    //调用方法的对象发生了变化
+    var objA={"objName":"AAA"};
+    var objB={"objName":"BBB"};
+    objA.test=function(){
+        console.log(this.objName);
+    }
+    objA.test();//AAA
+    //属于objA的方法切换到objB上
+    //方法.call(当前对象)
+    //将当前的调用执行从原有对象切换到当前对象
+    objA.test.call(objB);//BBB
+
+
+
+    //作为构造函数调用
+    function Person(username)
+    {
+        this.username=username;
+    }
+    Person.prototype.sayHi=function(){
+        console.log(this.username);
+    }
+    var person=new Person("zhangsan");
+    person.sayHi();//zhangsan
+    var person1=new Person("lisi")
+    person1.sayHi();//lisi
+    console.log(person,person1);//Person {username: "zhangsan"} Person {username: "lisi"}
+
+
+
+    function sum(x,y,z){
+        console.log(z);//undefined
+        return x+y+z;
+    }
+    console.log(sum(1,2));//NaN
+
+
+
+    function sum(x,y,z){
+        z=z||3;
+        return x+y+z;
+    }
+    console.log(sum(1,2));//6
+
+
+    //实参数量大于形参,可以使用arguments获取实参
+    //arguments类数组结构
+    function test(){
+      console.log(arguments); 
+      var s="";
+      for(var i=0;i<arguments.length;i++)
+      {
+          s+=arguments[i];
+      }
+      return s;
+    }
+    console.log(test("hello,","world"));//hello,world
+
+    //实参为基本数据类型时，形参改变不影响实参（值传递）
+    var a=1;
+    function foo(x){
+        x=2;
+        console.log("a:",a,"x:",x);//1,2
+    };
+    foo(a);
+    console.log(a);//1
+
+
+    var a=1;
+    function test(x){
+        x=2;
+        console.log(x,a);//2,1
+    }
+    function test1(){
+        var y=2;
+        test(a);
+    }
+    test1();
+
+    //实参为引用类型时，形参改变影响实参（引用传递）
+    var obj={x:0};
+    function bar(obj1){
+        obj1.x=2;
+        console.log(obj,obj1);//{x: 2} {x: 2}
+    }
+    bar(obj);
+
+
+    //定义一个函数，传入一个参数，完成对参数的复制处理，生成一个新的
+    //变量并返回  参数类型string boolean number数组
+    function copyArg(arg1)
+    {
+        var copy;
+        switch(true){
+            case (arg1 instanceof String):
+            case(arg1 instanceof Number):
+            case (arg1 instanceof Boolean):
+                  copy=arg1;
+                  break;
+            case(arg1 instanceof Array):
+              copy=[];
+              for(i=0;i<arg1.length;i++){
+                  copy[i]=arg1[i];
+              }
+              break;
+        }
+    }
+</script>
+</html>
