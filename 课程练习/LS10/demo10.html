@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //作用域
+    //作用域就是变量与函数的可访问范围（变量生效的区域范围，即在何处可以被访问到）-
+    // 作用域控制着变量与函数的可见性和生命周期，它也是根据名称查找变量的一套规则
+    var a=1;
+    var b=2;
+    function fn1(){
+        var b=3;
+        var d=4;
+        console.log(b);
+        function fn2(){
+            b=5;
+            var e=6;
+        }
+        fn2();
+    }
+    fn1();//3
+    console.log(b);//2
+
+
+    //JS采用的是词法作用域（静态性），这种静态结构决定了一个变量的作用域
+    // 词法作用域不会被函数从哪里调用等因素影响，与调用形式无关（体现了静态性）
+    //作用域的静态性，只完成  
+    var username="jack";
+    function foo()
+    {
+        console.log(username);
+    }
+    function bar(){
+        var username="bill";
+        foo();
+    }
+    bar();//jack
+
+
+
+    var name="jack";
+    function echo(){
+        console.log(name);
+    }
+    echo();//jack
+
+
+    //new function返回的是全局变量
+    // var scope="global";
+    // function checkScope(){
+    //     var scope="local";
+    //     return function(){
+    //         return scope;
+    //     };
+    // }
+    // console.log(checkScope()());//local
+
+
+
+    var scope="global";
+    function checkScope(){
+        var scope="local";
+        return new Function("return scope;");
+
+    }
+    console.log(checkScope()());//global
+
+
+
+    var userId=2;
+    document.onclick=function(){
+        console.log(userId);
+    }
+    //很长一段代码
+
+
+    // //代码被污染
+    // if(true)
+    // {
+    //     var userId=20;
+    // }//20
+
+   //立即执行 加小括号 防止代码被污染
+    (function(){
+        if(true){
+            var usedId=20;
+        }
+    })//2
+
+
+    //ES5中的处理办法
+    for(var i=0;i<3;i++)
+    {
+        setTimeout(function(){
+            console.log(new Date(),i);
+        },i*1000)
+    }
+   // Fri Mar 22 2019 10:43:08 GMT+0800 (中国标准时间) 3
+   //Fri Mar 22 2019 10:43:09 GMT+0800 (中国标准时间) 3
+   //Fri Mar 22 2019 10:43:10 GMT+0800 (中国标准时间) 3
+
+   //ES6定义块级作用域的方式
+   if(true)
+   {
+       let a=1;
+       console.log(a);//1
+   }
+   console.log(a);//1
+
+
+
+   //代码执行的上下文
+   //指的是代码执行的时候，相关的上下文环境
+   //函数的调用栈、this的指向、作用域以及相关的变量
+   var a=1;
+   var b=2;
+   function fn1(){
+       var c=3;
+       var d=4;
+       function fn2(){
+           var e=5;
+           var f=6;
+           function fn3(){
+               var g=7;
+               var h=8;
+           }
+           fn3();
+       }
+       fn2();
+   }
+   fn1();
+</script>
+</html>
