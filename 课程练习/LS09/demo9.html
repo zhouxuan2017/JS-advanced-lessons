@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    console.log(a);//undefined
+    var a=2;
+    console.log(a);//2
+
+    // //从解析器角度看到的代码
+    // var a;
+    // console.log(a);//undefined
+    // a=2;
+    // console.log(a);//2
+
+
+    if(true)
+    {
+        var a=1;
+    }
+    console.log(a);//1
+    if(false)
+     {
+         var b=2;
+     }
+     console.log(b);//undefined
+
+
+     //此段代码等价下一段代码    为函数声明提升案例
+     foo();
+     function foo(){
+         console.log("f_1");
+     }
+     function foo(){
+         console.log("f_2");
+     }
+
+
+     function foo(){
+         console.log("f_1");
+     }
+     function foo()
+     {
+         console.log("f_2");
+     }
+     foo();//f_2
+
+
+
+     //将变量和函数声明在当前作用域（全局、函数）内进行提升
+     console.log(a);//undefined
+     var a=1;
+     console.log(a);//1
+
+     
+     function fn1(){
+         //函数内部的预解析，在函数作用域范围内，对变量进行提升
+         console.log(b);
+         var b=2;
+     }
+     fn1();//undefined
+
+
+     function fn1(){
+         fn2();
+         function fn2(){
+             console.log("hello world");
+         }
+     }
+     fn1();//hello world  hello world
+
+
+     //同时有var和function关键字时
+    //  foo();
+    //  var foo=function(){
+    //        console.log("foo");
+    //  }//报错
+
+
+    //当function前有运算符的话，认定为表达式，不提升
+    // var foo;
+    // foo();
+    // foo=function(){
+    //     console.log("foo");
+    // };
+
+
+    console.log(foo);//undefined
+    var foo=function(){
+        console.log("foo");
+    };
+    foo();//foo
+
+
+    //声明前置与作用域的关系（全局作用域、函数作用域）
+    if(true)
+    {
+        var i=0;
+    }
+   console.log(i);//0
+
+    //前段代码等价
+    var i;
+    if(true)
+    {
+        i=0;
+    }
+  console.log(i);//0
+
+
+    //两端代码等价
+   function fo1o()
+   {
+       console.log(j);//undefined
+       var j=10;
+       console.log(j);//10
+
+   }
+   fo1o();
+
+
+   function foo1()
+   {
+       var j;
+       console.log(j);//undefined
+       j=10;
+       console.log(j);//10
+   }
+   foo1();
+   console.log(i);//0
+//    console.log(j);//报错
+</script>
+</html>
