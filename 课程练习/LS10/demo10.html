@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        #div1
+        {
+            width: 200px;
+            height: 200px;
+            background-color: blueviolet;
+        }
+    </style>
 </head>
 <body>
-    
+    <div id="div1"></div>
 </body>
 <script>
     //作用域
@@ -136,5 +144,52 @@
        fn2();
    }
    fn1();
+
+
+
+   //理解执行上下文和调用栈
+  console.log("小明回家");
+   var xx=["书桌","书包","铅笔盒"];//小明家中
+   console.log("在家做作业中");
+   function goToStore(){
+       var yy=["文具店老板","出售的文具"];//文具商店中
+       console.log("在文具店买文具中");
+       console.log("在文具店买文具中 发现没带钱");
+       goToBank();
+       console.log("在文具店买好文具  返回家");
+   }
+   function goToBank(){
+       var zz=["银行职员","柜员机"];//银行中
+       console.log("在银行取钱  返回文具店");
+   }
+   console.log("在家做作业中  发现笔没油了");
+   goToStore();//笔没油了  去商店买笔
+   console.log("在家继续做作业");
+
+
+
+
+   //作用域链
+//    var div1=document.getElementById("div1");
+//    function show(){
+//         document.onclick=function(){
+//         div1.innerHTML="hello world";
+//     }
+//    }
+//    show();
+
+
+
+   var div1=document.getElementById("div1");
+   function show(el){
+       (function(el){
+        document.onclick=function(){
+        div1.innerHTML="hello world";
+       }
+        
+       })(el)
+   }
+   show(div1);
+   
 </script>
 </html>
