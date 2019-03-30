@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function max(x,y){
+        return x>y?x:y;
+    }
+    console.log(max(2,3));//3
+
+    //加小括号不用等到函数调用 立即执行  下面为两个最常见两种使用小括号写法
+    (function max(x,y){
+        console.log(x>y?x:y) ;
+    }(2,3));//3
+
+
+    (function max(x,y){
+        console.log(x>y?x:y) ;
+    })(2,3);//3
+    
+
+
+
+    //与运算符结合的写法（执行函数、进行运算）
+    var i=function(){console.log( 10);}();//10
+
+
+    !function(){
+        return 2;
+    }();//false
+
+
+    !function(){
+        return 0;
+    }();//true
+
+
+
+    //通过IIFE对作用域的改变（限制变量生命周期）- JS（ES5）中没有块作用域，容易造成js文件内或文件间的同名变量互相污染- 我们往往会通过IIFE引入一个新的作用域来限制变量的作用域，来避免变量污染
+    var userId=2;
+    document.onclick=function(){
+        alert(userId);
+    }
+    //很长一段代码
+    if(true)
+    {
+        var userId=20;
+    }
+
+
+
+    //预解析
+    var userId;
+    var userId;
+    userId=2;
+    document.onclick=function(){
+        alert(userId);
+    }
+    if(true){
+        userId=20;
+    }
+
+    
+     //- JS（ES5）中没有块作用域，js文件内和文件间的同名变量容易互相污染- 我们往往会通过IIFE引入一个新的作用域来限制变量的生命周期
+     
+
+
+
+
+
+     //通过IIFE对变量存储的改变（避免变量共享错误）- 当程序运行到变量所在作用域时，变量被创建，JS（ES5）没有块作用域，变量可能会共享- 如下例：在函数作用域中创建的变量 i 只有一个，出现了变量 i 共享问题，可通过IIFE解决
+
+
+
+
+        //变量的非期望共享
+    function foo(){
+        var arr1=[];
+        for(var i=0;i<10;i++)
+        {
+            //在函数循环中是无法确定i值的 只有当最后调用的时候才知道
+            arr1[i]=function(){
+                return i;
+            }
+        }
+        return arr1;
+    }               
+    var arr2=foo();
+    arr2[0]();   
+
+
+
+
+    
+    function f(){
+        var getNumFuncs=[];
+        for(var i=0;i<10;i++)
+        {
+            (function(j){
+                getNumFuncs[j]=function(){
+                    return j;
+                };
+            })(i);
+        }
+        return getNumFuncs;
+    }
+    var tmp=f();
+    console.log(tmp[3]());//3   
+
+//函数的作用域，在定义的时候就是确定
+//函数内部变量，有些时候需要等到函数执行的时候来确定
+
+               
+//避免闭包中非期望的变量共享问题，解决方式 IIFE
+    for(var i=0;i<3;i++)
+    {
+        (function(j){
+            setTimeout(function(){
+                console.log(new Date,j);
+            },1000*i);
+        })(i);
+    }//Fri Mar 29 2019 10:22:16 GMT+0800 (中国标准时间) 0
+//demo11.html:126 Fri Mar 29 2019 10:22:17 GMT+0800 (中国标准时间) 1
+//demo11.html:126 Fri Mar 29 2019 10:22:18 GMT+0800 (中国标准时间) 2
+
+
+</script>
+</html>
