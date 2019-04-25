@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //闭包：通过在函数（fn1)内部定义函数（fn2)，来访问在父函数(fn1)当中定义的局部变量
+     function fn1(){
+         var x=1;
+         function fn2(){
+             return ++x;
+         }
+         return fn2();
+     }
+     var result=fn1();
+     console.log(result);//2
+     //console.log(result());报错
+
+
+
+     //闭包是由函数和与其相关的引用环境组合而成的实体
+     //闭包是词法作用域中的函数和其相关变量的包裹体
+
+
+
+     //形成闭包的条件：
+     //外层定义的函数（addNumber）、内层定义的函数()、
+     //内层函数与外层函数作用域内相关联的变量(start)
+
+     //闭包的作用:
+     //1.可以访问到函数（addNumber）内部定义的局部变量（start）
+     //2.可以让相关变量（start）保持在内存中，不释放
+     function addNumber(start){
+         return function(step){
+            console.log(start);
+             console.log(step);
+             start+=step;
+             return start;
+           
+         }
+     }
+     var result=addNumber(10);
+     console.log(result(1));//11
+     console.log(result(1));//12
+     console.log(result(3));//15
+
+
+
+//若一个函数离开了它被创建时的作用域，它还是会与这个作用域的变量相关联
+//闭包是一个函数外加上该函数创建时所建立的作用域
+
+     function foo(){
+         var i=0;
+         function bar(){
+             console.log(++i);
+         }
+         return bar;
+     }
+     var a=foo();
+     var b=foo();
+    a();//1
+    a();//2
+    b();//1
+
+
+
+    function f00(x)
+    {
+        var tmp=10;
+        return function(y){
+            console.log(x+y,++tmp);
+        }
+    }
+    var fee=foo(10);
+    fee(1);//11
+
+
+
+    var tmp=10;
+    function foo(){
+        return function(){
+            console.log(++tmp);//NaN
+        }
+    }
+    var fee=foo();//fee形成了一个闭包
+    fee();//11
+
+
+   //闭包的常见形式（以函数对象形式返回）
+   function foo11(x)
+   {
+       var tmp=3;
+       return function(y){
+           x.count=x.count?x.count+1:1;
+           console.log(x+y+tmp,x.count);
+       }
+   }
+   var age=new Number(2);
+   console.log(age);
+   var bar=foo11(age);
+   bar(10);//15 1
+   bar(10);//15 2
+   bar(10);//15 3
+
+
+
+//闭包的常见形式   作为对象的方法返回
+    function counter(){
+        var n=0;
+        return{
+            count:function()
+            {
+                return ++n;
+            },
+            reset:function()
+            {
+                n=0;return n;
+            }
+        }
+    }
+    var c=counter(),d=counter();
+    console.log(c.count());//1
+    console.log(d.count());//1
+    console.log(c.reset());//0
+    console.log(c.count());//1
+    console.log(d.count());//2
+
+
+   //单例模式实例：因为闭包，所以a常驻内存，始终存在
+    function fn(){
+        var a;
+        return function(){
+            return a||(a=document.body.appendChild(document.createElement('div')));
+        }
+    };
+    var f=fn();
+    console.log(f());//<div></div>
+
+
+
+  //定时修改DOM节点案例，1秒后执行，仍能访问到objID
+
+    function closure(objId,content,delay)
+    {
+        setTimeout(function(){
+            console.log(objId,content);
+        },delay);
+    }
+    closure("myDiv","course is create",1000);//myDiv course is create
+</script>
+</html>
