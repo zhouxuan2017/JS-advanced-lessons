@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+
+
+
+
+var obj={
+        num:10,
+        str:"Hi",
+        show:function(){
+            console.log(this.str);
+        }
+    }
+    //Object.create(obj);
+    //创建一个新对象，并且将obj对象作为新对象的_proto_
+    var subObject=Object.create(obj);
+    console.log(subObject._proto_==obj);//false
+    console.log(subObject.num);//10
+    console.log(obj.num);//10
+    console.log(obj.str);//Hi
+    obj.show();//Hi
+
+
+
+    //对象instanceof构造函数
+    //1.判断对象是否可以使用构造函数实例化得到
+    //2.判断在对象的原型链上能否找到构造函数的原型
+    //对象.proto_(...)==构造函数.prototype
+
+
+    console.log(Object instanceof Function);//true
+    console.log(Object._proto_==Function.prototype);//false
+    console.log(Object instanceof Object);//true
+    console.log(Number instanceof Function);//true
+    console.log(Number instanceof Object);//true
+    console.log(Function instanceof Function);//true
+    console.log(Function instanceof Object);//true
+    console.log(Array instanceof Function);//true
+    console.log(Array instanceof Object);//true
+    console.log(Math instanceof Function);//false
+    console.log(Math instanceof Object);//true
+    console.log(JSON instanceof Function);//false
+    console.log(JSON instanceof Object);//true
+    
+
+
+//如果只有getter方法那么是只读属性，如果只有setter方法，则是一个只写属性，读取时返回undefined 
+
+//访问器属性和数据属性不同，存取器不具有可写的属性特性（writable attribute）具体参见属性特性部分
+
+    var o={
+        _x:1.0,
+        get x(){
+            return this._x;
+        },
+        set x(val)
+        {
+            this._x=val;
+        }
+    };
+    console.log(o.x);//1
+    o.x=2;
+    console.log(o.x,o._x);//2 2
+
+
+
+    var p1={
+        _name:"Jack",
+        _age:23,
+        set age(val)
+        {
+            if(val>0&&val<150)
+            {
+                this._age=val;
+            }
+            else{
+                console.log("请设置正常年龄");
+            }
+        },
+      get age()
+      {
+          return this._age;
+      }
+    };
+    p1.age=178;//请设置正常年龄
+
+
+
+
+    function Person(username,age)
+    {
+        this.username=username;
+        this.age=age;
+    }
+    var p=new Person("zhangsan",20);
+    console.log(p._proto_==Person.prototype);
+    
+
+  //  - 通过对象字面量的方式直接创建对象
+  var obj={
+      num:10,
+      str:"Hi",
+      show:function(){
+          console.log(this.str);
+      }
+  }
+
+
+
+
+//通过构造函数的方式创建对象
+
+    function Person(username,age)
+    {
+        this.username=username;
+        this.age=age;
+        this.sayHi=function(){
+            console.log(this.username);
+        }
+    }
+    var person1=new Person("zhangsan",20);
+    var person2=new Person("lisi",21);
+    person1.sayHi();//zhangsa
+    person2.sayHi();//lisi
+    console.log(person1._proto_==Person.prototype);
+
+
+
+    var obj={x:1};
+    obj.y=2;
+
+
+    //obj.z=20;
+    // obj[z]=20;
+    // console.log(obj);
+
+//- 通过Object的create静态方法创建对象
+    var objProto={z:3}
+    var obj=Object.create(objProto);
+    obj.x=1;
+    obj.y=2;
+    console.log(obj.x);
+    console.log(obj.y);
+    console.log(obj.z);
+    console.log(obj.toString);
+    for(var i in obj)
+    {
+        console.log(i,obj[i]);
+    }
+
+
+  
+  var obj={};
+  obj.x=2;//直接添加属性
+  console.log(obj.x);//通过.访问属性//2
+  obj.x=5;//设置属性
+  console.log(obj["x"]);//通过[]访问属性//5
+  delete obj.x;//删除属性
+  console.log(obj.x);//undefined
+
+
+
+   
+</script>
+</html>
