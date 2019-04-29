@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //JavaScript的原型继承是对象-对象的继承
+    var superObj={
+        x:1,
+        y:2
+    };
+    var subObj_First=Object.create(superObj);
+    var subObj_Second=Object.create(superObj);
+    subObj_First.__proto__.x=5;
+    console.log(subObj_Second.x);//5
+
+    subObj_First.x=7;
+    console.log(subObj_Second.x);//5
+
+
+
+   // 构造函数实现的对象-对象的原型继承的原型共享问题
+   function Person(name)
+   {
+       this.name=name;
+   };
+   Person.prototype.age=22;
+   Person.prototype.showName=function(){
+       console.log(this.name);
+   };
+   function Student(id){
+       this.id=id;
+   }
+   Student.prototype=new Person("Mike");
+   var s1=new Student(2017001);
+   var s2=new Student(2017002);
+   console.log(s1.name,s1.age,s1.id);//Mike 22 2017001
+   console.log(s2.name,s2.age,s2.id);//Mike 22 2017002
+   s1.__proto__.name='Jack';
+   console.log(s2.name);//Jack
+   s2.__proto__.__proto__=99;
+   console.log(s2.age);//22
+
+    
+
+    //模拟类-类继承的形式 一 
+    function Person1(name,age)
+    {
+        this.name=name;
+        this.age=age;
+    };
+    Person1.prototype.showName=function(){
+        console.log(this.name);
+    };
+    function Student(name,age,id)
+    {
+        Person1.call(this,name,age);
+        this.id=id;
+    }
+    Student.prototype.__proto__=Person1.prototype;
+    var s1=new Student("xxx",22,2017001);
+    var s2=new Student("www",23,2017002);
+    console.log(s1);//Studentage: 22id: 2017001name: "xxx"__proto__: Person1
+    s1.showName();//xxx
+
+   
+
+     function Animal(name,weight)
+     {
+           this.name=name;
+           this.weight=weight;
+     }
+     Animal.prototype.run=function(){
+         console.log(this.name+"can run");
+     }
+     function Bird(name,weight,color,height)
+     {
+         Animal.call(this,name,weight);
+         this.color=color;
+         this.height=height;
+     }
+     Bird.prototype.__proto__=Animal.prototype;
+
+     var bird=new Bird("",20,"red","10cm");
+     console.log(bird);//Birdcolor: "red"height: "10cm"name: ""weight: 20__proto__: Animal
+
+
+     //模拟类-类继承的形式 二 
+     function Person2(name,age)
+    {
+        this.name=name;
+        this.age=age;
+    };
+    Person2.prototype.showName=function(){
+        console.log(this.name);
+    };
+    function Student1(name,age,id)
+    {
+        Person2.call(this,name,age);
+        this.id=id;
+    }
+    console.log(Student1.prototype);//Objectconstructor: ƒ Student1(name,age,id)__proto__: Object
+    Student1.prototype=Object.create(Person2.prototype);
+    Student1.prototype.constructor=Student;
+    var s1=new Student("xxx",22,2017001);
+    var s2=new Student("www",23,2017002);
+
+
+    //静态方法与原型方法的区别
+      var BaseClass=function(){};
+      BaseClass.prototype.f2=function(){
+          console.log('原型方法');
+      }
+      BaseClass.f1=function(){
+          console.log('静态方法');
+      }
+      BaseClass.f1();//静态方法
+      var instance1=new BaseClass();
+      instance1.f2();//原型方法
+
+
+      //Object.create()
+    
+
+     //再谈对象原型的constructor属性- 因为对象实例从原型中继承了constructor，所以可以通过constructor得到实例的构造函数- 确定对象的构造函数名、创建相似对象、constructor可用于指定构造函数
+     function Foo()
+     {
+
+     }
+     Foo.prototype.constructor==Foo;
+    var foo=new Foo();
+    foo.constructor==Foo;
+    //如果直接给构造函数的prototype属性赋值，会覆盖掉prorotype上的constructor
+    var foo1=new foo.constructor();
+    Foo.prototype={};
+
+
+    function Foo1(){};
+    var f=new Foo1();
+    console.log(f.constructor.name);//Foo1
+
+    function Constr(name)
+    {
+        this.name=name;
+    }
+    var x=new Constr("Jack");
+    var y=new x.constructor("Mike");
+    console.log(y,y instanceof Constr);//Constr true
+
+
+    //对象的公有属性、私有属性
+
+    (function(w,d){
+        function InputIdentify(inputId){
+            this._init();
+        }
+        InputIdentify.prototype._init=function(inputId){
+         var inputObject=d.getElementById(inputId);
+         this.inputObject=inputObject;
+    }
+        InputIdentify.prototype._effect=function(){
+            this.inputObject.onblur=function(){
+                console.log('文本框失去焦点');
+            }
+            this.inputObject.onfocus=function(){
+                console.log('文本框获得焦点');
+            }
+        }
+        w.InputIdentify=InputTdentify;
+    })(window,document)
+    var input1=new InputIdentify("username");
+
+    function A(id)
+    {
+        this.publicId=id;
+        var privateId=456;
+        this.getId=function(){
+            console.log(this.publicId,privateId);
+        };
+
+    }
+    var a=new A(123);
+    console.log(a.publicId);//123
+    a.getId();//123 456
+
+</script>
+</html>
+
