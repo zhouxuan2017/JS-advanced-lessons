@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+   //创建数组的方式
+     //通过字面量的方式直接创建，直接量中的值可以是任意的表达式- 通过Array构造函数来创建数组对象，注意传递的参数
+      var arr1=[1,2,3,"4"];
+      var arr2=new Array(5);
+      console.log(arr2);//Array(5)
+      for(var i=0;i<arr2.length;i++)
+      {
+          arr2[i]=i;
+      }
+      var arr3=new Array(1,2,3,4);
+      console.log(arr1,arr2,arr3);//Array(4) Array(5) Array(4)
+      
+
+//数组元素的增删改查的基本操作
+    var a=['hello'];
+    a[1]=3.14//增：直接添加数组元素
+    a[2]='world';
+    console.log('删除a[2]前的数组a',a);//["hello", 3.14, "world"]
+    delete a[2];//删
+     console.log('删除a[2]后的数组a',a);//(3) ["hello", 3.14, empty]
+    a[0]='xx';
+    console.log(a[0]);//查：看数组中的元素，索引从0开始  xx
+
+
+
+    var i=2,b=[];
+    b[i]=3;
+    b[i+1]='YY';
+    b[b[i]]=b[0];
+    console.log(b);// [4][empty × 2, 3, undefined]
+
+
+    //数组相对于普通对象的特别之处
+      var a=[];
+      a[-1.23]=true;//创建一个名为‘-1.23’的属性
+      a['100']=0//数组的第101个元素
+      a[1.00]='Hi'//和a[1]相当
+      console.log(a.length);//101
+      console.log(a);//101) [empty, "Hi", empty × 98, 0, -1.23: true]
+
+
+   //稀疏数组
+      //稀疏数组是包含从0开始的不连续索引的数组，length值大于实际定义的元素的个数- 遍历稀疏数组时，注意的跳过无元素项的问题
+      var arr1=[,2,3,,5];
+      console.log(arr1.length);//5
+      Array.prototype.min='扩展属性';
+      //遍历数组的时候 需要注意
+      for (var i in arr1)
+      {
+          console.log(i,arr1[i]);//1 2
+                                 //2 3
+                                 //4 5
+                                 //min 扩展属性
+      }
+      
+       var a1=[,'abc'];
+       console.log(a1.length);//2
+       for(var i in a1)
+       {
+           console.log(i,a1[i]);//1 abc
+                                //min 扩展属性
+       }
+       
+
+       var a2=new Array(3);
+       console.log(a2.length);//3
+       var a3=[,,];
+       console.log(a3.length);//2
+   
+   //多维数组(矩形数组、交错数组)
+       //JS中可以通过包含数组的数组来模拟多维数组
+       var  table =new Array(5);
+       for(var i=0;i<table.length;i++)
+       {
+           table[i]=new Array(5);
+       }
+
+       for(var row=0;row<table.length;row++)
+       {
+           for(var col=0;col<table[row].length;col++)
+           {
+               table[row][col]=row*col;
+           }
+       }
+       var product=table[2][4];
+       console.log(product)//8
+
+    //内置对象方法
+     //1.确定使用的方法是构造函数的静态方法还是原型方法
+     //2.查看MDN该方法相关定义、作用
+     //3.查看该方法的相关参数
+          //(1)如果包含了回调函数，还需要回调函数的相关参数
+          //(2)哪些参数是必须的，哪些参数是可选的
+    //4.该方法执行得到的返回值
+
+
+    //数组原型方法（排序和颠倒元素顺序-破坏性）
+
+    //shift() 方法从数组中删除第一个元素，并返回该元素的值。此方法更改数组的长度。
+    var array1=[1,2,3]
+    var a=array1.shift();
+    console.log(array1);//(2) [2, 3]
+
+    
+    //unshift() 方法将一个或多个元素添加到数组的开头，并返回该数组的新长度。
+    var array1 = [1, 2, 3];
+    console.log(array1.unshift(4, 5));//5
+
+    
+    //pop()方法从数组中删除最后一个元素，并返回该元素的值。此方法更改数组的长度。
+    var plants = ['broccoli', 'cauliflower', 'cabbage', 'kale', 'tomato'];
+    plants.pop()
+    console.log(plants);//["broccoli", "cauliflower", "cabbage", "kale"]
+
+    
+    //push() 方法将一个或多个元素添加到数组的末尾，并返回该数组的新长度
+    var animals = ['pigs', 'goats', 'sheep'];
+    animals.push('cows')
+    console.log(animals);// ["pigs", "goats", "sheep", "cows"]
+
+    
+    //splice() 方法通过删除或替换现有元素或者原地添加新的元素来修改数组,并以数组形式返回被修改的内容。此方法会改变原数组
+    //array.splice(start[, deleteCount[, item1[, item2[, ...]]]])
+    //start​
+    //指定修改的开始位置（从0计数）。如果超出了数组的长度，则从数组末尾开始添加内容；如果是负值，则表示从数组末位开始的第几位（从-1计数，这意味着-n是倒数第n个元素并且等价于array.length-n）；如果负数的绝对值大于数组的长度，则表示开始位置为第0位。
+    var months = ['Jan', 'March', 'April', 'June'];
+    months.splice(1, 0, 'Feb');//从第一位开始删除0个元素插入Feb
+    console.log(months);//["Jan", "Feb", "March", "April", "June"]
+
+
+    //reserve颠倒元素位置
+    //反转数组元素的顺序 - 第一个成为最后一个，最后一个成为第一个。
+    var array1 = ['one', 'two', 'three'];
+    var reversed = array1.reverse(); 
+    console.log('reversed: ', reversed);//(3) ["three", "two", "one"]
+
+
+    //对数组的元素进行排序并返回数组。
+    //默认排序顺序是在将元素转换为字符串，然后比较它们的UTF-16代码单元值序列时构建的。
+    var array1 = [1, 30, 4, 21, 100000];
+    array1.sort();
+    console.log(array1);//[1, 100000, 21, 30, 4]
+
+
+     // concat() 方法用于合并两个或多个数组。此方法不会更改现有数组，而是返回一个新数组。
+     var array1 = ['a', 'b', 'c'];
+     var array2 = ['d', 'e', 'f'];
+     console.log(array1.concat(array2));//["a", "b", "c", "d", "e", "f"]
+    
+
+     //slice() 方法返回一个新的数组对象，这一对象是一个由 begin和 end（不包括end）决定的原数组的浅拷贝。原始数组不会被改变。
+     var animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
+     console.log(animals.slice(2));//(3) ["camel", "duck", "elephant"]
+     console.log(animals.slice(2, 4));//["camel", "duck"]
+     console.log(animals.slice(1, 5));//(4) ["bison", "camel", "duck", "elephant"]
+
+     
+     //join() 方法将一个数组（或一个类数组对象）的所有元素连接成一个字符串并返回这个字符串。如果数组只有一个项目，那么将返回该项目而不使用分隔符
+     var elements = ['Fire', 'Air', 'Water'];
+     console.log(elements.join());//Fire,Air,Water
+     console.log(elements.join(''));//FireAirWater
+     console.log(elements.join('-'));//Fire-Air-Water
+
+    
+     //该indexOf()方法返回可在数组中找到给定元素的第一个索引，如果不存在则返回-1。
+     var beasts = ['ant', 'bison', 'camel', 'duck', 'bison'];   
+     console.log(beasts.indexOf('bison'));//1
+     console.log(beasts.indexOf('bison', 2));//从第二个位置开始索引  //4
+    
+  
+     //lastIndexOf() 方法返回指定元素（也即有效的 JavaScript 值或变量）在数组中的最后一个的索引，如果不存在则返回 -1。从数组的后面向前查找，从 fromIndex 处开始。
+     var animals = ['Dodo', 'Tiger', 'Penguin', 'Dodo'];
+     console.log(animals.lastIndexOf('Dodo'));//3
+     console.log(animals.lastIndexOf('Tiger'));//1
+ 
+
+
+    //arr.forEach(callback,thisArg);
+    //callback是针对数组的每个数组元素所应用的回调函数
+    //callback有三个参数如下：
+          //value表示数组元素的元素值
+          //index表示数组元素的索引值
+          //arr表示被操作的数组
+    //this指向：
+       //thisArg回调函数内部的this指向
+    var arr1=[1,2,3];
+    var obj1={x:"d"};
+    arr1.forEach(function(value,index,arr){
+        console.log(value,index,arr);
+        this[value]=value;
+    },obj1); //1 0 Array(3)
+      // 2 1 Array(3)
+     // 3 2 Array(3)
+     console.log(obj1);//{1: 1, 2: 2, 3: 3, x: "d"}
+
+
+
+
+
+     //arr.every(callback)
+     //测试数组的数组元素执行回调函数的结果，如果有返回值为false的，则result
+     //为false，如果均为true则result为true
+     var arr1=[10,20,30,40];
+     var result=arr1.every(function(value){
+         return value>20;
+     })
+     console.log(result);//false
+
+     
+     //arr.some(callback)
+     //只要某些数组元素满足条件，返回值即为true，如果全部都不满足，返回值为false
+     var result1=arr1.some(function(value){
+         return value>20;
+     })
+     console.log(result1);//true
+
+    //arr.map()创建一个新数组，其结果是该数组的每一个元素都调用一个函数后重新组成新的数组
+     var result2=arr1.map(function(value){
+         return value*2;
+     })
+     console.log(result2);//(4) [20, 40, 60, 80]
+
+
+
+   
+      /*Arr.filter()
+        生成新的数组结构，
+         并且数组元素满足特定的过滤条件
+      */
+        var arr1 = [10,20,30,40];
+        var result3 = arr1.filter(function(value){
+            return value >= 20;
+        });
+        console.log(result3);//(3) [20, 30, 40]
+
+
+        var arr2=[' abcd ',' kff ded '];
+        Array.prototype.filterspace=function(){
+            var arr1=this;
+            var result=arr1.map(function(value){
+                return value.trim();
+            });
+            return result;
+        }
+        console.log(arr2.filterspace());//(2) ["abcd", "kff ded"]
+
+
+        //该reduce()方法对数组的每个元素执行reducer函数（您提供），从而生成单个输出值。
+        var array1 = [1, 2, 3, 4];
+        var reducer = (accumulator, currentValue) => accumulator + currentValue;
+        console.log(array1.reduce(reducer));//10
+        console.log(array1.reduce(reducer, 5));//15
+</script>
+</html>
