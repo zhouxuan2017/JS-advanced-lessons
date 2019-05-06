@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //new Date(年份，月份，日，时，分，秒)
+    var date1=new Date('2019','05','05');
+    console.log(date1);//Wed Jun 05 2019 00:00:00 GMT+0800 (中国标准时间)
+
+    //new Date(时间格式字符串)
+    var date2=new Date("2019-05-05");
+    console.log(date2);//Sun May 05 2019 08:00:00 GMT+0800 (中国标准时间
+
+    var millionSeconds=Date.now();
+    var date3=new Date(millionSeconds);
+    console.log(date3);//Sun May 05 2019 10:50:38 GMT+0800 (中国标准时间)
+
+
+    //时间分类：
+         //当地时间
+         //世界标准时间  UTC GMT
+         //parse() 方法可解析一个日期时间字符串，并返回 1970/1/1 午夜距离该日期时间的毫秒数。
+    var millionSeconds=Date.parse("2019-05-05");
+    console.log(millionSeconds);//1557014400000
+
+    //week取值范围0-6
+    var weeks=['星期天','星期一','星期二','星期三','星期四','星期五','星期六'];
+    var currentDay=(new Date()).getDay();
+    console.log(weeks[currentDay]);
+    //getMonth()取值范围为0-11
+    (new Date()).getMonth();
+</script>
+</html>
