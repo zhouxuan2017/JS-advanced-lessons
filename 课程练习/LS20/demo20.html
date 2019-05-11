@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+      正则表达式的结构：
+         /正则表达式文本/标识符
+    */
+    //正则对象的创建方式一：通过字面量直接创建
+    //match()方法检索返回一个字符串正则表达式的结果
+    var reg1=/[bcf]at/gi;
+    var str1='bat cat fat Fat difijfi';
+    console.log(str1.match(reg1));//["bat", "cat", "fat", "Fat"]
+
+
+    //[xyz]从中括号中的字符中选任意一个
+    //i标识符：是否忽略大小写
+    //g标识符：是否全局搜索
+    var reg1=/[bcf]at/g;
+    var str1='bat cat fat Fat difijfi';
+    console.log(str1.match(reg1));//["bat", "cat", "fat"]
+
+
+    var reg1=/[bcf]at/i;
+    var str1='bat cat fat Fat difijfi';
+    console.log(str1.match(reg1));//["bat", index: 0, input: "bat cat fat Fat difijfi", groups: undefined]
+
+
+
+    //正则对象的创建方式二：通过RegExp构造函数来实例化正则对象
+    var reg2=new RegExp(/[bcf]at/,'gi');
+    var reg3=new RegExp('[bcf]at','gi');
+    var str1='bat cat fat Fat difijfi';
+    console.log(str1.match(reg2));//(4) ["bat", "cat", "fat", "Fat"]
+    console.log(str1.match(reg3));//(4) ["bat", "cat", "fat", "Fat"]
+
+    
+    //元字符，没有任何修饰符，普通字符
+    //12345    abcdef
+    var reg1=/ab/gi;
+    var str1='abcdefg';
+    str1.replace(reg1,'x');
+    console.log(str1.replace(reg1,'x'));//xcdefg
+
+
+    //字符分类：
+    //\d：匹配阿拉伯数字
+    var reg1=/a\d/gi;
+    var str1='a1bcda2kkee';
+    console.log(str1.replace(reg1,'x'));//xbcdxkkee
+
+    //   \D:不是一个阿拉伯数字  [^0-9]
+    var reg2=/a\D/gi;
+    var str2='a1aba2ac';
+    console.log(str2.replace(reg2,'x'));//a1xa2x
+
+    //    \w匹配所有的字母、数字、下划线[A-Z a-z 0-9_]
+    var reg3=/a\w/gi;
+    var str3='a1aba2aca_';
+    console.log(str3.replace(reg3,'x'));//xxxxx
+
+
+    //  \W不是字母、数字、下划线
+    var reg4=/a\W/gi;
+    var str4='a1a&ba2aca_';
+    console.log(str4.replace(reg4,'x'));//a1xba2aca_
+
+    //  \s匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [ \f\n\r\t\v]。注意 Unicode 正则表达式会匹配全角空格符。
+    var reg5=/\sa\d/gi;
+    var str5='a1 a3a4a5';
+    console.log(str5.replace(reg5,'x'));//a1xa4a5
+
+
+    //  \S	匹配任何非空白字符。等价于 [^ \f\n\r\t\v]。
+    var reg6=/\Sa\d/gi;
+    var str6='a1 a3a4a5';
+    console.log(str6.replace(reg6,'x'));//a1 axa5
+
+
+    //字符的集合
+    var reg1=/[abc]\d/gi;
+    var str1="a1b2c3d4dfdfdfd";
+    console.log(str1.replace(reg1,"x"));//xxxd4dfdfdfd
+
+   
+   //从中括号集合中任取一个字符
+    var reg2=/[abc][0-9]/gi;
+    var str2='a1b2c3d4e5';
+    console.log(str2.replace(reg2,"x"));//xxxd4e5
+    
+    
+    //中括号里的^为排除括号内的字符的任意一个字符
+    var reg3=/[^0-9]/gi;
+    var str3='1a2b3c';
+    console.log(str3.replace(reg3,"x"));//1x2x3x
+
+
+    //匹配开头字符是数字  第二个字符是a-f
+    //第三个字符是空格
+    var reg4=/\d[a-f] /gi;
+    var str3='1a 2b3c';
+    console.log(str3.replace(reg4,'x'));//x2b3c
+
+    //匹配以a开头
+    //^b     以b开头的字符串匹配
+    var reg1=/^a\d/gi;
+    var str1='a1fdfdfjkdjfkd';
+    console.log(str1.replace(reg1,'x'));//xfdfdfjkdjfkd
+
+    
+    //匹配必须以数字结尾
+    //$表示以什么什么结尾
+    //n$以n结尾的字符串匹配
+    var reg2=/a\d$/gi;
+    var str2="fdfdnjfdjfna2";
+    console.log(str2.replace(reg2,"x"));//fdfdnjfdjfnx
+
+     
+     //.表示任意单个字符
+
+    //数量词
+    //m?  表示m出现0次或者1次
+    var reg1=/a?bcd/gi;
+    var str1="abcd bcd aabcd";
+    console.log(str1.replace(reg1,'x'));//x x ax
+
+    //n+  表示n出现一次或者多次
+    var reg2=/a+bcd/gi;
+    var str2='abcd bcd aabcd aaabcd';
+    console.log(str2.replace(reg2,'x'));//x bcd x x
+
+
+    //p{m,n}表示p至少出现m次，至多出现n次
+    //P{n}出现至少n次
+    //p{m,}表示至少匹配m次
+
+    //* 表示匹配前面的字符出现0次或多次
+
+
+    // x|y表示匹配x或者y
+
+
+
+
+    //exec()方法用于检索字符串中的正则表达式的匹配。
+    //返回一个数组，其中存放匹配的结果。如果未找到匹配，则返回值为 null。
+    
+
+    //reg.exec(str)如果可以匹配的，返回数组，如果不能匹配，返回null
+          //返回的数组结构
+          //[整个正则匹配到的内容，分组匹配到的内容,开始匹配的索引]
+    //用小括号包裹的规则内容，称之为分组
+    var reg1=/(ss\d)a/gi;
+    var str1='ss1abcdefg';
+    console.log(reg1.exec(str1));// ["ss1a", "ss1", index: 0, input: "ss1abcdefg", groups: undefined]
+
+
+    var reg1=/(\dss)a\1/gi;//\1表示引入（\dss)
+    var reg2=/(\dss)(\dss)a\2/gi;//\2表示引入(\dss)
+    var reg3=/(\dss)a(\dss)/gi;
+    var str1='1ssa1ssfdfdfdf'
+    console.log(str1.replace(reg1,'x'));//xfdfdfdf
+
+
+    var reg3=/(ab){3}/gi;
+    var str3='abababcdef';
+    console.log(str3.replace(reg3,'x'));//xcdef
+
+
+
+   // String.prototype
+    //   var result=str.replace(正则表达式，替换成的内容)；
+    //   返回值result是被替换后的字符串
+    console.log('a,b,c,d'.replace(',','x'));//axb,c,d
+    console.log('a,b,c,d'.replace(/,/g,'x'));//axbxcxd
+    console.log('a2b3c4d'.replace(/[2-3]/,'x'));//axb3c4d
+    console.log('a2b3c4d'.replace(/[2-3]/g,'x'));//axbxc4d
+
+
+    // var result=str.match(正则表达式)；
+    //返回值result 如果匹配成功返回数组，如果匹配失败，返回的是null
+    var reg=/(aa)b\d/gi;
+    var str='aab2hello';
+    console.log(str.match(reg));//aab2
+    console.log('a1b2c'.match(/1/));//["1", index: 1, input: "a1b2c", groups: undefined]
+    console.log('a1b2c'.match(/f/));//null
+    console.log('a1b2c'.match(/\d/));//["1", index: 1, input: "a1b2c", groups: undefined]
+    console.log('a1b2c'.match(/\d/g));//["1", "2"]
+
+
+
+    //var result=str.search(正则表达式)
+    //返回值是匹配位置的起始索引值
+    console.log('a1b2c3d4'.search(/1/));//1
+    console.log('a1b2c3d4'.search(/f/));//-1没找到
+    console.log('a1b2c3d4'.search(/\d/g));//1忽略全局
+    console.log('a1b2c3d4'.search(/\d\w/g));//1 忽略全局
+
+
+
+//RegExp.prototype
+    //reg.test(str)验证字符串是否符合正则表达式规则
+    //符合返回true，不符合返回false
+    
+     //reg.test(str)
+
+    var regExp=/a/gi;
+    console.log(regExp.test('ab'));//true
+    console.log(regExp.test('ab'));//false
+
+
+
+    //reg.exec(str)匹配返回数组，不匹配返回null
+    //[整个正则匹配到的内容，分组匹配到的内容，index]
+    var execExp2=/\d{1,2}(\d)(\d)/g;
+    var ts='12s342dsfsf233s';
+    console.log(execExp2.exec(ts),execExp2.lastIndex);//(3) ["342", "4", "2", index: 3, input: "12s342dsfsf233s", groups: undefined] 6
+    console.log(execExp2.exec(ts),execExp2.lastIndex);//(3) ["233", "3", "3", index: 11, input: "12s342dsfsf233s", groups: undefined] 14
+
+
+
+
+    //String.prototype.split
+    console.log('a,b,c,s'.split(','));// ["a", "b", "c", "s"]
+    console.log('a2b34d'.split(/\d/));// ["a", "b", "", "d"]
+
+     /(.*)\.(rar|zip|7zip|tgz)$/
+      /*
+         (.*)  .任意的一个字符 *表示前面的字符出现0次或多次，表示文件名字符痴线0次或者多次
+         (.+)
+
+         \.  对.做转义处理，匹配
+          
+        (rar|zip|7zip|tgz)任意取其中一个
+
+        $ 以前面的分组内容结尾
+      */
+
+
+      var reg2=/^#[a-fA-F0-9]{6}$/;
+      /*
+         ^#表说必须以#开头
+         [a-fA-F0-9] 从[]集合中取任意一个字符   a-fA-F0-9
+
+         {6}表示前面的字符出现6次
+
+         $还是以前面的集合中的任一字符结尾
+      */
+</script>
+</html>
