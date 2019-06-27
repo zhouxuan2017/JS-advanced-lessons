@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var obj={
+        objName:"obj1",
+        showName:function(){
+            var that=this
+            setTimeout(function(){
+                console.log(that.objName);
+            },3000);
+        }
+    }
+    obj.showName();//obj1
+
+
+
+    //存在函数嵌套，this指向不正确时，解决方案
+    //1，通过that转存
+    //2.通过bind
+    //3.通过箭头函数=>
+    //applay call
+    var obj1={
+        objName:"obj1",
+        showName:function(){
+           
+            setTimeout(()=>{
+                console.log(this);
+                console.log(this.objName);
+            },3000);
+        }
+    }
+    obj1.showName();//{objName: "obj1", showName: ƒ}
+                    //obj1
+
+
+
+    //带有默认值的参数默认是声明的，在函数内部不能在重复定义
+    //带有默认值的参数需要写到没有默认值的参数后面, x ,y=2,z=3
+    function fn1(x,y=2,z=3){
+          return x+y+z;
+    }
+    console.log(fn1(1));//6
+    console.log(fn1(1,4));//8
+    console.log(fn1(1,4,6));//11
+
+    
+
+     //剩余操作  可以接收剩下的所有实参
+     //必须放在参数的最后位置上
+     //剩余操作符对应变量最后得到一个数组
+    function fn1(x,...y)
+    {
+        console.log(x,y);
+    }
+    fn1(1,2,3,4,5);//1 []
+                //1 [4]
+                //1 (2) [4, 6]
+                //1 (4) [2, 3, 4, 5]
+
+
+
+    //扩展操作符
+    //将数组转化为以，分割的参数结构
+    //是剩余操作符的逆操作
+    function fn2(){
+        console.log(arguments);
+    }
+    fn2(1,...[2,3,4,5]);//Arguments(5) [1, 2, 3, 4, 5, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+</script>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+     window.onload=function(){
+         window.Foo=function(){
+             var inputValue=document.getElementById('inputID'.value);
+             try{
+                 var n=parseInt(inputValue);
+                 var a=new Array(n);//定义一个数组 传3试试 再传-5试试
+                 for(var i=0;i<n;i++)
+                 {
+                     a[i]=i;
+                 }
+             }catch(e){
+                 alert(e.name+e.message);
+             }
+             finally{
+                 document.getElementById('labelID').innerHTML=a;
+             }
+         }
+     }
+</script>
+</html>

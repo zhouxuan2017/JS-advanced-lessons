@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //先执行后面在执行这个周期执行
+    setTimeout(function(){
+        console.log("world");
+    },3000);
+    console.log("hello");
+    //hello
+    //world
+
+
+
+    //Promise将异步的操作写成同步执行的方式
+    //resolve是异步操作成功时候的调用
+    //reject是异步操作失败的时候的调用
+    //利用Promise实现先执行那个周期回调函数在执行其他的
+    new Promise(function(resolve,reject){
+     setTimeout(function(){
+         console.log("you are ");//you are
+         resolve();//resolve代表异步执行已经成功了，可以执行其他的操作了
+     },3000)
+    }).then(function(){
+        //对应resolve
+       console.log("hello");//resolve()的执行会执行then里面定义的第一个函数
+       console.log("val");//hello  val
+    },function(){
+      //对应reject
+     }).catch(function(e){
+         //捕获异常
+         console.log(e);
+     }).finally(function(){
+         //无论如何都会执行
+         console.log("finally执行结束")//finally执行结束  总会执行
+
+     })
+
+</script>
+</html>

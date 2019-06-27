@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新增数据类型</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //s1和s2是两个不同的变量
+    //使用symbol方法生成一个Symbol的变量  并且具有唯一性，不可转化其它数据类型
+    let s1=Symbol("s1");
+    let s2=Symbol("s2");
+    console.log(s1==s2);//false
+
+
+
+
+    let s3=Symbol("s3");
+    let obj={};
+    obj[s3]="hello";
+    let obj1={
+        [s3]:"world"
+    }
+
+
+
+    let obj2={};
+    let s4=Symbol("s4");
+    Object.defineProperty(obj2,s4,{
+        value:2
+    });
+    Object.getOwnPropertySymbols(obj2);
+
+    //基本数据类型多了一个symbol
+    let f1=Symbol("f1");
+    console.log(Symbol.for("f1")==f1);//false
+    console.log(Symbol.for("f1")==Symbol.for("f1"));//true
+</script>
+</html>

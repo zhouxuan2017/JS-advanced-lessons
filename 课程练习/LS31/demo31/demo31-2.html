@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新增数据结构</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //ES6提供了新的数据结构Set
+     
+    //去除重复元素
+    let s1=new Set([1,2,4,1,4,2,6,74]);
+    console.log(s1);//Set(5) {1, 2, 4, 6, 74}
+    for(let i of s1)
+    {
+        console.log(i);//1 2 4 6 74
+    }
+    console.log(s1.size);//5
+    s1.add('jsj');
+    console.log(s1);//Set(6) {1, 2, 4, 6, 74,'jsj'}
+
+    s1.delete('jsj');
+    console.log(s1);//Set(5) {1, 2, 4, 6, 74}
+    console.log(s1.values());//SetIterator {1, 2, 4, 6, 74}
+    for(let j of s1.values())
+    {
+        console.log(j);//1 2 4 6 74
+    }
+
+
+    let m1=new Map();
+    let o={"x":1};
+    m1.set(o,2);
+    console.log(m1);//Map(1) {{…} => 2}
+    for(let i of m1)
+    {
+        console.log(i);//Map(1) {{…} => 2}
+    }
+
+
+
+
+
+    let m2=new Map([["username","zhangsan"],["age",20]])
+    for(let i of m2)
+    {
+        console.log(i)//["username", "zhangsan"]
+                      // ["age", 20]
+    }
+</script>
+</html>

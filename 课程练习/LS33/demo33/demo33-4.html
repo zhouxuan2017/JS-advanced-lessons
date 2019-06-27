@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function* helloGenerator(){
+        yield "hello";
+        yield "world";
+        return "ending";
+    }
+
+    let iterator1=helloGenerator();
+    console.log(iterator1.next());//{value: "hello", done: false}
+    console.log(iterator1.next());//{value: "world", done: false}
+    console.log(iterator1.next());//{value: "ending", done: true}
+</script>
+</html>

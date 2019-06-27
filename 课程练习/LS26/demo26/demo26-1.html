@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //异步代码执行
+    //分支代码不会影响主程序执行
+    var userName='zhangsan';
+    var age=30;
+    document.onclick=function(){
+        alert(age);
+    }
+    console.log(userName);
+
+
+
+    var intervalId=setInterval(function(){
+        console.log(new Date());
+    },2000)
+    var timer=new Date();
+    console.log(timer);
+</script>
+</html>
